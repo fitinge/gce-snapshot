@@ -9,6 +9,6 @@ else
   from_date=$(date -v -30d "+%Y-%m-%d")
 fi
 gcloud compute snapshots list --filter="creationTimestamp<$from_date" --regexp "(diario.*)" --uri | while read SNAPSHOT_URI; do
-   gcloud compute snapshots delete $SNAPSHOT_URI
+   gcloud compute snapshots delete -q $SNAPSHOT_URI
 done
 #
