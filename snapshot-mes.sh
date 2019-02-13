@@ -1,6 +1,6 @@
 #!/bin/bash
-gcloud compute disks list --format='value(name,zone)'| while read DISK_NAME ZONE; do
-  gcloud compute disks snapshot $DISK_NAME --snapshot-names mensal-${DISK_NAME:0:31}-$(date "+%Y-%m-%d") --zone $ZONE
+/snap/bin/gcloud compute disks list --format='value(name,zone)'| while read DISK_NAME ZONE; do
+  /snap/bin/gcloud compute disks snapshot $DISK_NAME --snapshot-names mensal-${DISK_NAME:0:31}-$(date "+%Y-%m-%d") --zone $ZONE
 done
 
 if [[ $(uname) == "Linux" ]]; then
@@ -8,7 +8,7 @@ if [[ $(uname) == "Linux" ]]; then
 else
   from_date=$(date -v -1y "+%Y-%m-%d")
 fi
-gcloud compute snapshots list --filter="creationTimestamp<$from_date" --regexp "(mensal.*)" --uri | while read SNAPSHOT_URI; do
-   gcloud compute snapshots delete -q $SNAPSHOT_URI
+/snap/bin/gcloud compute snapshots list --filter="creationTimestamp<$from_date" --regexp "(mensal.*)" --uri | while read SNAPSHOT_URI; do
+   /snap/bin/gcloud compute snapshots delete -q $SNAPSHOT_URI
 done
 #
